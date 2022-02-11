@@ -4,7 +4,7 @@ const mappers = require('../../data/helpers/mappers');
 
 module.exports = {
   get,
-  insert,
+  add,
   update,
   remove,
   getProjectActions,
@@ -36,7 +36,7 @@ function get(id) {
   }
 }
 
-function insert(project) {
+function add(project) {
   return db("projects")
     .insert(project)
     .then(([id]) => get(id));
