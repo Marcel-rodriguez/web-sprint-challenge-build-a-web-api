@@ -56,12 +56,13 @@ projectsRouter.delete('/:id', validateProjectId, async (req, res, next) => {
     }
 })
 
-projectsRouter.get('/:id/actions', validateProjectId, (req, res, next) => {
-    projectModel.get(req.params.id)
-    .then(post => {
-        console.log(post.actions)
-        res.status(200).json(post.actions)
-    }).catch(next)
+projectsRouter.get('/:id/actions', validateProjectId, async (req, res, next) => {
+    try{
+        let project = await projectModel.getProjectActions(req.params.id)
+        res.status(200).json(project)
+    } catch(err){
+        next(err)
+    }
 })
 
 

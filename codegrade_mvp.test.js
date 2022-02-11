@@ -185,7 +185,7 @@ describe('server.js', () => {
       test('[20] inserts a new action into actions table', async () => {
         const actionNew = { project_id: 2, description: 'm', notes: 'n', completed: false }
         await request(server).post('/api/actions').send(actionNew)
-        const action = await Action.get(3)
+        const action = await Action.getAction(3)
         expect(action).toMatchObject(actionNew)
       }, 750)
       test('[21] responds with a 400 if the request body is missing notes, description or project_id', async () => {
@@ -196,16 +196,16 @@ describe('server.js', () => {
     })
     describe('[PUT] /api/actions/:id', () => {
       test('[22] responds with the updated action', async () => {
-        const action = await Action.get(1)
+        const action = await Action.getAction(1)
         const changes = { ...action, completed: true }
         expect(action.completed).toBe(false)
         const res = await request(server).put('/api/actions/1').send(changes)
         expect(res.body).toMatchObject(changes)
       }, 750)
       test('[23] updates the action in the actions table', async () => {
-        let action = await Action.get(1)
+        let action = await Action.getAction(1)
         await request(server).put('/api/actions/1').send({ ...action, completed: !action.completed })
-        let updated = await Action.get(1)
+        let updated = await Action.getAction(1)
         expect(updated.completed).toBe(!action.completed)
       }, 750)
       test('[24] responds with a 400 if the request body is missing missing notes, description, completed or project_id', async () => {
@@ -216,10 +216,10 @@ describe('server.js', () => {
     describe('[DELETE] /api/actions/:id', () => {
       test('[25] deletes the action with the given id', async () => {
         await request(server).delete('/api/actions/1')
-        let actions = await Action.get()
+        let actions = await Action.getAction()
         expect(actions).toMatchObject([actionB])
         await request(server).delete('/api/actions/2')
-        actions = await Action.get()
+        actions = await Action.getAction()
         expect(actions).toMatchObject([])
       }, 750)
       test('[26] responds with a 404 if no action with given id', async () => {

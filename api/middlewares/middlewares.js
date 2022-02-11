@@ -19,8 +19,8 @@ const validateProjectId = (req, res, next) => {
 }
 
 const projectBodySchema = yup.object({
-    name: yup.string().trim().min(3).required(),
-    description: yup.string().trim().min(3).required(),
+    name: yup.string().trim().required(),
+    description: yup.string().trim().required(),
     completed: yup.bool().required()
 })
 
@@ -53,8 +53,8 @@ const validateActionsId = (req, res, next) => {
 
 const validActionBody = yup.object({
     project_id: yup.number().required(),
-    description: yup.string().trim().min(3).required(),
-    notes: yup.string().trim().min(3).required(),
+    description: yup.string().trim().required(),
+    notes: yup.string().trim().required(),
     completed: yup.bool().required()
 })
 
@@ -64,13 +64,13 @@ const validateActionBody = async (req, res, next) => {
         req.body = validAction
         next()
     } catch(err){
-        next(err)
+        next({status: 400, message: err})
     }
 }
 
 const validModifiedActionBody = yup.object({
-    description: yup.string().trim().min(3).required(),
-    notes: yup.string().trim().min(3).required(),
+    description: yup.string().trim().required(),
+    notes: yup.string().trim().required(),
     completed: yup.bool().required()
 })
 
