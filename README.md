@@ -170,3 +170,6 @@ so all in all the whole route would read /server/api/users/:id
 Http request clients are used to manually make requests to specific endpoints to
 make sure they are responding properly with the correct status codes and data.
 One client i like to use is the thunder client. this client allows you to make all of the most important HTTP crud requests and it allows you do add things like headers and bodies if a specific request requires it.
+
+Edit.... this is just to push my codegrade changes im passing 27/27 locally but not on
+the bloomtech dashboard because of Action.get is not recognized but that has been modified to Action.getAction since the action-model was changed
