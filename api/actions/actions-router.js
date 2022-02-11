@@ -9,14 +9,14 @@ const actionsModel = require('./actions-model')
 const projectModel = require('../projects/projects-model')
 
 actionsRouter.get('/', (req, res, next) => {
-    actionsModel.getAction()
+    actionsModel.get()
     .then(actions => {
         res.status(200).json(actions)
     }).catch(next)
 })
 
 actionsRouter.get('/:id', validateActionsId, (req, res, next) => {
-    actionsModel.getAction(req.params.id)
+    actionsModel.get(req.params.id)
     .then( action => {
         res.status(200).json(action)
     }).catch(next)
@@ -42,7 +42,7 @@ actionsRouter.put('/:id', validateActionsId, validateModifiedActionBody, async (
     console.log(id)
     try{
         const updateAction = await actionsModel.update(id, req.body)
-        const updatedAction = await actionsModel.getAction(id)
+        const updatedAction = await actionsModel.get(id)
         const action = {
             ...updatedAction
         }
@@ -53,7 +53,7 @@ actionsRouter.put('/:id', validateActionsId, validateModifiedActionBody, async (
 })
 
 actionsRouter.delete('/:id', validateActionsId, async (req, res, next) => {
-    const action = await actionsModel.getAction(req.params.id)
+    const action = await actionsModel.get(req.params.id)
     const deletedAction = {
         ...action,
         message: `Action Deleted`

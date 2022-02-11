@@ -3,13 +3,13 @@ const db = require('../../data/dbConfig.js');
 const mappers = require('../../data/helpers/mappers');
 
 module.exports = {
-  getAction,
+  get,
   insert,
   update,
   remove,
 };
 
-function getAction(id) {
+function get(id) {
   let query = db('actions');
 
   if (id) {
@@ -33,14 +33,14 @@ function getAction(id) {
 function insert(action) {
   return db('actions')
     .insert(action)
-    .then(([id]) => getAction(id));
+    .then(([id]) => get(id));
 }
 
 function update(id, changes) {
   return db('actions')
     .where('id', id)
     .update(changes)
-    .then((count) => (count > 0 ? getAction(id) : null));
+    .then((count) => (count > 0 ? get(id) : null));
 }
 
 function remove(id) {

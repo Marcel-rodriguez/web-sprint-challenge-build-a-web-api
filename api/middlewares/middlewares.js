@@ -2,7 +2,7 @@ const yup = require('yup')
 
 //module imports go here
 const {get} = require('../../api/projects/projects-model')
-const {getAction} = require('../../api/actions/actions-model')
+const action = require('../../api/actions/actions-model')
 
 //project middlewares
 
@@ -40,7 +40,7 @@ const validateProjectBody = async (req, res, next) => {
 //action middlewares
 
 const validateActionsId = (req, res, next) => {
-    getAction(req.params.id)
+    action.get(req.params.id)
     .then(action => {
         if(action){
             req.action = action
